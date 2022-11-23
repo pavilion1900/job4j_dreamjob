@@ -10,4 +10,14 @@ public class IndexControl {
     public String index() {
         return "index";
     }
+
+    @GetMapping("/example")
+    public String example() {
+        return "example";
+    }
+
+    @GetMapping("/table")
+    public String table() {
+        return "table";
+    }
 }
