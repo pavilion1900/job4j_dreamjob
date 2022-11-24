@@ -11,7 +11,7 @@ public class PostController {
     private final PostStore postStore = PostStore.intsOf();
 
     @GetMapping("/posts")
-    public String posts(Model model) {
+    public String findAll(Model model) {
         model.addAttribute("posts", postStore.findAll());
         return "posts";
     }
