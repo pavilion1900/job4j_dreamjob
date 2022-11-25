@@ -18,7 +18,7 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
 
-    <title>Работа мечты!</title>
+    <title>Работа мечты</title>
 </head>
 <body>
 <div class="container">
@@ -38,24 +38,24 @@
         </div>
     </nav>
     <div class="row">
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Created</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="candidate: ${candidates}">
-                <td th:text="${candidate.id}"/>
-                <td th:text="${candidate.name}"/>
-                <td th:text="${candidate.description}"/>
-                <td th:text="${candidate.created}"/>
-            </tr>
-            </tbody>
-        </table>
+        <div class="card" style="width: 100%">
+            <div class="card-header">
+                Новая вакансия.
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label>Название
+                            <input type="text" class="form-control">
+                        </label><br>
+                        <label>Описание
+                            <input type="text" class="form-control">
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 </body>
