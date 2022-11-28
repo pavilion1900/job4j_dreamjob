@@ -1,4 +1,4 @@
-package ru.job4j.dreamjob.store;
+package ru.job4j.dreamjob.persistence;
 
 import ru.job4j.dreamjob.model.Post;
 
@@ -19,7 +19,7 @@ public class PostStore {
         posts.put(3, new Post(3, "Senior Java Job", "Third description"));
     }
 
-    public static PostStore intsOf() {
+    public static PostStore instOf() {
         return INSTANCE;
     }
 
