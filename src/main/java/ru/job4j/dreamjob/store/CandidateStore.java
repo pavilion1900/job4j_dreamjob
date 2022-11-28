@@ -5,11 +5,13 @@ import ru.job4j.dreamjob.model.Candidate;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CandidateStore {
 
     private static final CandidateStore INSTANCE = new CandidateStore();
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
+    private final AtomicInteger id = new AtomicInteger(3);
 
     private CandidateStore() {
         candidates.put(1, new Candidate(1, "Nick", "Student"));
@@ -26,6 +28,7 @@ public class CandidateStore {
     }
 
     public void add(Candidate candidate) {
+        candidate.setId(id.incrementAndGet());
         candidates.put(candidate.getId(), candidate);
     }
 
@@ -34,6 +37,6 @@ public class CandidateStore {
     }
 
     public void update(Candidate candidate) {
-        candidates.put(candidate.getId(), candidate);
+        candidates.replace(candidate.getId(), candidate);
     }
 }
