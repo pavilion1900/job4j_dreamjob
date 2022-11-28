@@ -41,16 +41,17 @@
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Новый кандидат.
+                Редактирование данных о кандидате.
             </div>
             <div class="card-body">
-                <form th:action="@{/createCandidate}" method="post">
+                <form th:action="@{/updateCandidate}" method="post" th:object="${candidate}">
+                    <input type="hidden" name="id" th:field="*{id}"/>
                     <div class="form-group">
-                        <input type="hidden" name="id" value="0"/>
                         <label for="name">Имя</label><br>
-                        <input type="text" class="form-control" name="name" id="name"/>
+                        <input type="text" class="form-control" name="name" id="name" th:field="*{name}"/>
                         <label for="description">Описание</label>
-                        <input type="text" class="form-control" name="description" id="description"/>
+                        <input type="text" class="form-control" name="description" id="description"
+                               th:field="*{description}"/>
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>

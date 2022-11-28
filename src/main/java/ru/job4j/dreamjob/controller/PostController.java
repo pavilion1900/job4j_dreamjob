@@ -38,7 +38,7 @@ public class PostController {
     }
 
     @GetMapping("/formUpdatePost/{postId}")
-    public String updatePost(Model model, @PathVariable("postId") int id) {
+    public String formUpdatePost(Model model, @PathVariable("postId") int id) {
         model.addAttribute("post", postStore.findById(id));
         return "updatePost";
     }
