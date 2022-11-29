@@ -3,6 +3,7 @@ package ru.job4j.dreamjob.persistence;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Repository;
 import ru.job4j.dreamjob.model.Candidate;
+import ru.job4j.dreamjob.model.City;
 
 import java.util.Collection;
 import java.util.Map;
@@ -17,9 +18,11 @@ public class CandidateStore {
     private final AtomicInteger ids = new AtomicInteger(3);
 
     private CandidateStore() {
-        candidates.put(1, new Candidate(1, "Nick", "Student"));
-        candidates.put(2, new Candidate(2, "Max", "Java Developer. Experience < 1 year"));
-        candidates.put(3, new Candidate(3, "Pavel", "Java Developer. Experience > 1 year"));
+        candidates.put(1, new Candidate(1, "Nick", "Student", new City()));
+        candidates.put(2,
+                new Candidate(2, "Max", "Java Developer. Experience < 1 year", new City()));
+        candidates.put(3,
+                new Candidate(3, "Pavel", "Java Developer. Experience > 1 year", new City()));
     }
 
     public Collection<Candidate> findAll() {

@@ -2,6 +2,7 @@ package ru.job4j.dreamjob.persistence;
 
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Repository;
+import ru.job4j.dreamjob.model.City;
 import ru.job4j.dreamjob.model.Post;
 
 import java.util.Collection;
@@ -17,9 +18,9 @@ public class PostStore {
     private final AtomicInteger ids = new AtomicInteger(3);
 
     private PostStore() {
-        posts.put(1, new Post(1, "Junior Java Job", "First description"));
-        posts.put(2, new Post(2, "Middle Java Job", "Second description"));
-        posts.put(3, new Post(3, "Senior Java Job", "Third description"));
+        posts.put(1, new Post(1, "Junior Java Job", "First description", new City()));
+        posts.put(2, new Post(2, "Middle Java Job", "Second description", new City()));
+        posts.put(3, new Post(3, "Senior Java Job", "Third description", new City()));
     }
 
     public Collection<Post> findAll() {
