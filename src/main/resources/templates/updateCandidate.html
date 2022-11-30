@@ -44,7 +44,8 @@
                 Редактирование данных о кандидате.
             </div>
             <div class="card-body">
-                <form th:action="@{/updateCandidate}" method="post" th:object="${candidate}">
+                <form th:action="@{/updateCandidate}" method="post" th:object="${candidate}"
+                      enctype="multipart/form-data">
                     <input type="hidden" name="id" th:field="*{id}"/>
                     <div class="form-group">
                         <label for="name">Имя</label><br>
@@ -56,6 +57,8 @@
                         <select class="form-control" id="city.id" name="city.id">
                             <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}"></option>
                         </select>
+                        <label for="file">Фотография</label><br>
+                        <input type="file" class="form-control" name="file" id="file"/>
                     </div>
                     <div class="form-check">
                         <input type="checkbox" name="visible" class="form-check-input" id="visible"/>

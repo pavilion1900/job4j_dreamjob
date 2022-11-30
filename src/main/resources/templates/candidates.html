@@ -44,6 +44,7 @@
             <thead>
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">Photo</th>
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Created</th>
@@ -53,6 +54,10 @@
             <tbody>
             <tr th:each="candidate: ${candidates}">
                 <td th:text="${candidate.id}"/>
+                <td>
+                    <img th:width="150" th:hight="150" th:src="@{|/photoCandidate/${candidate.id}|}">
+                    <span th:text="${candidate.name}"></span>
+                </td>
                 <td>
                     <a th:href="@{|/formUpdateCandidate/${candidate.id}|}">
                         <i class="fa fa-edit"></i>
