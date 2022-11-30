@@ -12,17 +12,20 @@ public class Candidate implements Serializable {
     private boolean visible;
     private City city;
     private byte[] photo;
-    private final LocalDateTime created = LocalDateTime.now();
+    private LocalDateTime created;
 
     public Candidate() {
     }
 
-    public Candidate(int id, String name, String description, City city, byte[] photo) {
+    public Candidate(int id, String name, String description, boolean visible, City city,
+                     byte[] photo, LocalDateTime created) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.visible = visible;
         this.city = city;
         this.photo = photo;
+        this.created = created;
     }
 
     public int getId() {
@@ -75,6 +78,10 @@ public class Candidate implements Serializable {
 
     public LocalDateTime getCreated() {
         return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
     }
 
     @Override
