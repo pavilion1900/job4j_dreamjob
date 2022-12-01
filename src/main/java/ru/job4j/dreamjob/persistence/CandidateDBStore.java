@@ -21,17 +21,32 @@ import java.util.List;
 public class CandidateDBStore {
 
     private static final Logger LOG = LoggerFactory.getLogger(PostDBStore.class);
-    private static final String FIND_ALL_CANDIDATES =
-            "SELECT id, name, description, visible, city_id, photo, created FROM candidate";
-    private static final String FIND_BY_ID_CANDIDATE =
-            "SELECT id, name, description, visible, city_id, photo, created FROM candidate "
-                    + "WHERE id = ?";
-    private static final String UPDATE_CANDIDATE =
-            "UPDATE candidate set name = ?, description = ?, visible = ?, city_id = ?, photo = ? "
-                    + "WHERE id = ?";
-    private static final String ADD_CANDIDATE =
-            "INSERT INTO candidate(name, description, visible, city_id, photo, created) "
-                    + "VALUES (?, ?, ?, ?, ?, ?)";
+
+    private static final String FIND_ALL_CANDIDATES = """
+            SELECT
+            id, name, description, visible, city_id, photo, created
+            FROM candidate
+            """;
+
+    private static final String FIND_BY_ID_CANDIDATE = """
+            SELECT
+            id, name, description, visible, city_id, photo, created
+            FROM candidate
+            WHERE id = ?
+            """;
+
+    private static final String UPDATE_CANDIDATE = """
+            UPDATE candidate
+            SET name = ?, description = ?, visible = ?, city_id = ?, photo = ?
+            WHERE id = ?
+            """;
+
+    private static final String ADD_CANDIDATE = """
+            INSERT INTO
+            candidate (name, description, visible, city_id, photo, created)
+            VALUES (?, ?, ?, ?, ?, ?)
+            """;
+
     private final BasicDataSource pool;
 
     public CandidateDBStore(BasicDataSource pool) {
