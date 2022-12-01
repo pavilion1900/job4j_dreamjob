@@ -7,3 +7,5 @@ build/
 *.log
 *.pdf
 *.gz
+/testdb.mv.db
+/testdb.trace.db
