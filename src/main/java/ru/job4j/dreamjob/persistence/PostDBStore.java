@@ -21,14 +21,32 @@ import java.util.List;
 public class PostDBStore {
 
     private static final Logger LOG = LoggerFactory.getLogger(PostDBStore.class);
-    private static final String FIND_ALL_POSTS =
-            "SELECT id, name, description, visible, city_id, created FROM post";
-    private static final String FIND_BY_ID_POST =
-            "SELECT id, name, description, visible, city_id, created FROM post WHERE id = ?";
-    private static final String UPDATE_POST =
-            "UPDATE post set name = ?, description = ?, visible = ?, city_id = ? WHERE id = ?";
-    private static final String ADD_POST =
-            "INSERT INTO post(name, description, visible, city_id, created) VALUES (?, ?, ?, ?, ?)";
+
+    private static final String FIND_ALL_POSTS = """
+            SELECT
+            id, name, description, visible, city_id, created
+            FROM post
+            """;
+
+    private static final String FIND_BY_ID_POST = """
+            SELECT
+            id, name, description, visible, city_id, created
+            FROM post
+            WHERE id = ?
+            """;
+
+    private static final String UPDATE_POST = """
+            UPDATE post
+            set name = ?, description = ?, visible = ?, city_id = ?
+            WHERE id = ?
+            """;
+
+    private static final String ADD_POST = """
+            INSERT INTO
+            post (name, description, visible, city_id, created)
+            VALUES (?, ?, ?, ?, ?)
+            """;
+
     private final BasicDataSource pool;
 
     public PostDBStore(BasicDataSource pool) {
