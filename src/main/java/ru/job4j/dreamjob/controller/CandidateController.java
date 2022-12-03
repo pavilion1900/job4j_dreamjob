@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ru.job4j.dreamjob.model.Candidate;
 import ru.job4j.dreamjob.model.City;
+import ru.job4j.dreamjob.model.User;
 import ru.job4j.dreamjob.service.CandidateService;
 import ru.job4j.dreamjob.service.CityService;
+import ru.job4j.dreamjob.util.SessionUtil;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
@@ -35,13 +38,19 @@ public class CandidateController {
     }
 
     @GetMapping("/candidates")
-    private String findAll(Model model) {
+    private String findAll(Model model,
+                           HttpSession session) {
+        User user = SessionUtil.checkUser(session);
+        model.addAttribute("user", user);
         model.addAttribute("candidates", candidateService.findAll());
         return "candidates";
     }
 
     @GetMapping("/formAddCandidate")
-    public String addCandidate(Model model) {
+    public String addCandidate(Model model,
+                               HttpSession session) {
+        User user = SessionUtil.checkUser(session);
+        model.addAttribute("user", user);
         model.addAttribute("cities", cityService.findAllCities());
         return "addCandidate";
     }
@@ -78,7 +87,11 @@ public class CandidateController {
     }
 
     @GetMapping("/formUpdateCandidate/{candidateId}")
-    public String formUpdateCandidate(Model model, @PathVariable("candidateId") int id) {
+    public String formUpdateCandidate(Model model,
+                                      @PathVariable("candidateId") int id,
+                                      HttpSession session) {
+        User user = SessionUtil.checkUser(session);
+        model.addAttribute("user", user);
         model.addAttribute("candidate", candidateService.findById(id));
         model.addAttribute("cities", cityService.findAllCities());
         return "updateCandidate";
