@@ -41,6 +41,13 @@ public class UserDBStore {
             WHERE email = ?
             """;
 
+    private static final String FIND_BY_EMAIL_AND_PASSWORD_USER = """
+            SELECT
+            id, email, password
+            FROM users
+            WHERE email = ? AND password = ?
+            """;
+
     private static final String ADD_USER = """
             INSERT INTO
             users (email, password)
@@ -87,6 +94,22 @@ public class UserDBStore {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement(FIND_BY_EMAIL_USER)) {
             ps.setString(1, email);
+            try (ResultSet resultSet = ps.executeQuery()) {
+                if (resultSet.next()) {
+                    return Optional.of(buildUser(resultSet));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<User> findByEmailAndPassword(String email, String password) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement(FIND_BY_EMAIL_AND_PASSWORD_USER)) {
+            ps.setString(1, email);
+            ps.setString(2, password);
             try (ResultSet resultSet = ps.executeQuery()) {
                 if (resultSet.next()) {
                     return Optional.of(buildUser(resultSet));

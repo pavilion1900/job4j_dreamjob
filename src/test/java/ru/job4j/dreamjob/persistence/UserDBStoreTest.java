@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class UserDBStoreTest {
 
@@ -46,11 +47,30 @@ class UserDBStoreTest {
     }
 
     @Test
-    public void whenFindByEmailUser() {
+    public void whenFindUserByEmail() {
         User user = new User(0, "nick@abc.com", "1111");
         store.add(user);
         Optional<User> userInDb = store.findByEmail("nick@abc.com");
         assertThat(userInDb.get().getEmail()).isEqualTo(user.getEmail());
+    }
+
+    @Test
+    public void whenFindUserByEmailAndPasswordWithEqualsPassword() {
+        User user = new User(0, "nick@abc.com", "1111");
+        store.add(user);
+        Optional<User> userInDb = store.findByEmailAndPassword("nick@abc.com", "1111");
+        assertAll(
+                () -> assertThat(userInDb.get().getEmail()).isEqualTo(user.getEmail()),
+                () -> assertThat(userInDb.get().getPassword()).isEqualTo(user.getPassword())
+        );
+    }
+
+    @Test
+    public void whenFindUserByEmailAndPasswordWithDifferentPassword() {
+        User user = new User(0, "nick@abc.com", "1111");
+        store.add(user);
+        Optional<User> userInDb = store.findByEmailAndPassword("nick@abc.com", "2222");
+        assertThat(userInDb).isEqualTo(Optional.empty());
     }
 
     @Test

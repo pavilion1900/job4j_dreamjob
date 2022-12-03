@@ -33,4 +33,8 @@ public class UserService {
     public Optional<User> findUserByEmail(String email) {
         return userDBStore.findByEmail(email);
     }
+
+    public Optional<User> findUserByEmailAndPassword(String email, String password) {
+        return userDBStore.findByEmailAndPassword(email, password);
+    }
 }
