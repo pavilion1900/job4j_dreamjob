@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @ThreadSafe
@@ -37,7 +38,7 @@ public class UserDBStore {
             SELECT
             id, email, password
             FROM users
-            WHERE LOWER(email) = LOWER(?)
+            WHERE email = ?
             """;
 
     private static final String ADD_USER = """
@@ -67,37 +68,37 @@ public class UserDBStore {
         return users;
     }
 
-    public User findById(int id) {
+    public Optional<User> findById(int id) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement(FIND_BY_ID_USER)) {
             ps.setInt(1, id);
             try (ResultSet resultSet = ps.executeQuery()) {
                 if (resultSet.next()) {
-                    return buildUser(resultSet);
+                    return Optional.of(buildUser(resultSet));
                 }
             }
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
-        return null;
+        return Optional.empty();
     }
 
-    public User findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement(FIND_BY_EMAIL_USER)) {
             ps.setString(1, email);
             try (ResultSet resultSet = ps.executeQuery()) {
                 if (resultSet.next()) {
-                    return buildUser(resultSet);
+                    return Optional.of(buildUser(resultSet));
                 }
             }
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
-        return null;
+        return Optional.empty();
     }
 
-    public User add(User user) {
+    public Optional<User> add(User user) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement(
                      ADD_USER, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -111,9 +112,9 @@ public class UserDBStore {
             }
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
-            return null;
+            return Optional.empty();
         }
-        return user;
+        return Optional.of(user);
     }
 
     private User buildUser(ResultSet resultSet) throws SQLException {

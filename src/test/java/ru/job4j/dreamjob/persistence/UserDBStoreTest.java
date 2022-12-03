@@ -8,6 +8,7 @@ import ru.job4j.dreamjob.model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,8 +31,8 @@ class UserDBStoreTest {
     public void whenAddUserWithUniqueEmail() {
         User user = new User(0, "nick@abc.com", "1111");
         store.add(user);
-        User userInDb = store.findById(user.getId());
-        assertThat(userInDb.getEmail()).isEqualTo(user.getEmail());
+        Optional<User> userInDb = store.findById(user.getId());
+        assertThat(userInDb.get().getEmail()).isEqualTo(user.getEmail());
     }
 
     @Test
@@ -48,8 +49,8 @@ class UserDBStoreTest {
     public void whenFindByEmailUser() {
         User user = new User(0, "nick@abc.com", "1111");
         store.add(user);
-        User userInDb = store.findByEmail("nick@abc.com");
-        assertThat(userInDb.getEmail()).isEqualTo(user.getEmail());
+        Optional<User> userInDb = store.findByEmail("nick@abc.com");
+        assertThat(userInDb.get().getEmail()).isEqualTo(user.getEmail());
     }
 
     @Test

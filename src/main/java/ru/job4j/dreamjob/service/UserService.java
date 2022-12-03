@@ -23,14 +23,14 @@ public class UserService {
     }
 
     public Optional<User> add(User user) {
-        return Optional.ofNullable(userDBStore.add(user));
+        return userDBStore.add(user);
     }
 
-    public User findUserById(int id) {
+    public Optional<User> findUserById(int id) {
         return userDBStore.findById(id);
     }
 
-    public User findUserByEmail(String email) {
+    public Optional<User> findUserByEmail(String email) {
         return userDBStore.findByEmail(email);
     }
 }
