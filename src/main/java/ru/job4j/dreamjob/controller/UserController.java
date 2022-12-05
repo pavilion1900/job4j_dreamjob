@@ -50,33 +50,26 @@ public class UserController {
         return "redirect:/loginPage";
     }
 
-    @GetMapping("/success")
-    public String successRegistration() {
-        return "success";
-    }
-
-    @GetMapping("/fail")
-    public String rejectRegistration() {
-        return "fail";
-    }
-
     @GetMapping("/formAddUser")
     public String addUser(Model model,
+                          @RequestParam(name = "fail", required = false) Boolean fail,
                           HttpSession session) {
         User user = SessionUtil.checkUser(session);
         model.addAttribute("user", user);
+        model.addAttribute("fail", fail != null);
         return "addUser";
     }
 
     @PostMapping("/registration")
-    public String registration(Model model,
-                               @ModelAttribute User user) {
+    public String registration(@ModelAttribute User user,
+                               HttpServletRequest request) {
         Optional<User> regUser = userService.add(user);
         if (regUser.isEmpty()) {
-            model.addAttribute("message", "Пользователь с такой почтой уже существует");
-            return "redirect:/fail";
+            return "redirect:/formAddUser?fail=true";
         }
-        return "redirect:/success";
+        HttpSession session = request.getSession();
+        session.setAttribute("user", regUser.get());
+        return "redirect:/posts";
     }
 
     @PostMapping("/login")

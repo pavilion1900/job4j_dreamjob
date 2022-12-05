@@ -30,12 +30,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="#">Главная <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" th:href="@{/posts}">Вакансии</a>
-                <a class="nav-item nav-link" th:href="@{/formAddPost}">Добавить вакансию</a>
-                <a class="nav-item nav-link" th:href="@{/candidates}">Кандидаты</a>
-                <a class="nav-item nav-link" th:href="@{/formAddCandidate}">Добавить кандидата</a>
-                <a class="nav-item nav-link" th:href="@{/users}">Пользователи</a>
                 <a class="nav-item nav-link" th:href="@{/formAddUser}">Зарегистрировать пользователя</a>
                 <a class="nav-item nav-link" th:if="${user.email == 'Гость'}" th:href="@{/loginPage}">
                     <span th:text="${user.email}"></span>
@@ -54,6 +48,9 @@
                 Новый Пользователь.
             </div>
             <div class="card-body">
+                <div th:if="${fail}" class="alert alert-danger" role="alert">
+                    Rejection. Email with the same name already exists
+                </div>
                 <form th:action="@{/registration}" method="post">
                     <input type="hidden" name="id" value="0"/>
                     <div class="form-group">
