@@ -10,9 +10,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Set;
 
 @Component
 public class AuthFilter implements Filter {
+
+    private static final Set<String> PERMISSION_SET =
+            Set.of("loginPage", "login", "formAddUser", "registration");
 
     @Override
     public void doFilter(
@@ -22,8 +26,7 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         String uri = req.getRequestURI();
-        if (uri.endsWith("loginPage") || uri.endsWith("login") || uri.endsWith("formAddUser")
-                || uri.endsWith("registration")) {
+        if (checkURI(uri)) {
             chain.doFilter(req, res);
             return;
         }
@@ -32,5 +35,10 @@ public class AuthFilter implements Filter {
             return;
         }
         chain.doFilter(req, res);
+    }
+
+    private boolean checkURI(String uri) {
+        return PERMISSION_SET.stream()
+                .anyMatch(uri::endsWith);
     }
 }
